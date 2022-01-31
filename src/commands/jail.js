@@ -17,7 +17,6 @@ module.exports = {
    */
   async execute(interaction) {
     const victima = interaction.options.getUser("victima");
-
     const prisionero = interaction.guild.roles.cache.find(
       (role) => role.name === "Prisionero"
     );
