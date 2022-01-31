@@ -11,6 +11,7 @@ const logger = new Logger("Kohaku", Color.blue);
 // Use handlers
 Handlers.use.commands(kohaku);
 Handlers.use.events(kohaku, logger);
+Handlers.use.collectors(kohaku);
 
 // Login
 kohaku.login(process.env.DISCORD_TOKEN);

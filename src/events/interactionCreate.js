@@ -1,27 +1,16 @@
+const { Interaction } = require("discord.js");
+const InteractionCommandFunc = require("../utils/events/CommandFunction");
+const SelectMenuCommandFunc = require("../utils/events/SelectMenuFunction");
+
 module.exports = {
   name: "interactionCreate",
+  /**
+   * Main interactionCreate event
+   * @param {Interaction} interaction
+   * @returns
+   */
   async execute(interaction) {
-    if (!interaction.isCommand()) return;
-
-    const command = interaction.client.commands.get(interaction.commandName);
-
-    if (!command) return;
-
-    try {
-      if (!interaction.member.permissions.has(command.permissions)) {
-        return interaction.reply({
-          content: "No tienes permisos para usar este comando.",
-          ephemeral: true,
-        });
-      }
-
-      await command.execute(interaction);
-    } catch (error) {
-      console.error(error);
-      await interaction.reply({
-        content: "There was an error while executing this command!",
-        ephemeral: true,
-      });
-    }
+    if (interaction.isCommand()) InteractionCommandFunc(interaction);
+    if (interaction.isSelectMenu()) SelectMenuCommandFunc(interaction);
   },
 };
