@@ -9,6 +9,7 @@
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![Platform](https://img.shields.io/badge/platform-reddit-orange.svg)](https://www.reddit.com/user/Wordbook_Bot)
+[![Discord](https://img.shields.io/discord/439868001609842688?color=blue&label=Discord&logo=discord&logoColor=white)](https://discord.gg/hkhGwRPZZr)
 [![Issues](https://img.shields.io/github/issues/O-isaac/kohaku.svg)](https://github.com/O-isaac/kohaku/issues)
 [![Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
