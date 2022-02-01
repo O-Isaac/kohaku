@@ -7,7 +7,6 @@
 
 <div align="center">
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![Discord]()]()
 [![Pull Requests](https://img.shields.io/github/issues-pr/o-isaac/kohaku.svg)](https://github.com/o-isaac/kohaku/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 </div>
