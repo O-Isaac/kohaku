@@ -6,11 +6,13 @@
 <h3 align="center">Kohaku</h3>
 
 <div align="center">
+
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-![Discord](https://img.shields.io/discord/439868001609842688?color=blue&label=DISCORD&logo=discord&logoColor=white&style=flat-square)
+[![Platform](https://img.shields.io/badge/platform-reddit-orange.svg)](https://www.reddit.com/user/Wordbook_Bot)
 [![Issues](https://img.shields.io/github/issues/O-isaac/kohaku.svg)](https://github.com/O-isaac/kohaku/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/o-isaac/kohaku.svg)](https://github.com/o-isaac/kohaku/pulls)
+[![Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+
 </div>
 
 ---
