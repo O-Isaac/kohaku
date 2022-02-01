@@ -7,8 +7,7 @@
 
 <div align="center">
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![Discord](https://img.shields.io/discord/439868001609842688?color=blue&label=DISCORD&logo=discord&logoColor=white&style=flat-square)]()
-[![Issues](https://img.shields.io/github/issues/O-isaac/kohaku.svg)](https://github.com/O-isaac/kohaku/issues)
+[![Discord]()]()
 [![Pull Requests](https://img.shields.io/github/issues-pr/o-isaac/kohaku.svg)](https://github.com/o-isaac/kohaku/pulls)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 </div>
