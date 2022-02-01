@@ -28,7 +28,11 @@ module.exports = {
       : member.roles.remove(roles.get("937802754804572240"));
 
     return interaction.reply({
-      content: "Se añadio los roles: " + "``" + values.join(", ") + "``",
+      content: `${
+        interaction.user.username
+      }-sama, acabo de actualizar tu roles en el servidor\n\`${values.join(
+        ", "
+      )}\``,
       ephemeral: true,
     });
   },
