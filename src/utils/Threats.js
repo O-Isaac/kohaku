@@ -10,14 +10,17 @@ async function getChannelThreats(interaction) {
   const threads = channel.threads.cache;
 
   const channelThreads = await channel.threads.create({
-    name: "Error " + (threads.size + 1),
+    name:
+      "Error " +
+      (threads.size + 1) +
+      " | " +
+      new Date().toLocaleDateString().replace(/\//g, ""),
     autoArchiveDuration: 60 * 24,
     reason: interaction.options.getString("descripcion"),
   });
 
   const embed = new MessageEmbed()
     .setColor("PURPLE")
-    .setTitle("Error")
     .setAuthor({
       name: interaction.user.tag,
       iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
