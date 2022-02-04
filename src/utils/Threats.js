@@ -1,4 +1,4 @@
-const { CommandInteraction, MessageEmbed } = require("discord.js");
+const { CommandInteraction, MessageEmbed, SelectMenuInteraction, Message } = require("discord.js");
 
 /**
  * Devuelve una lista de los threat activos del canal
