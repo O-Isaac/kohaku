@@ -31,16 +31,15 @@ module.exports = {
 
     // Embed
     const embed = new MessageEmbed()
-      .setTitle("Gulag")
       .setDescription(
-        `${user.user.tag} ha sido encarcelado por ${interaction.user.tag}`
+        `**${user.user.username}** ha sido encarcelado por **${interaction.user.username}**`
       )
       .setColor("PURPLE")
       .setThumbnail("https://i.imgur.com/YsNLH6X.png")
       .setImage("https://c.tenor.com/ro-VMfAVHKMAAAAC/new-gulag.gif")
       .setTimestamp();
 
-    if (Math.random() < 0.05) {
+    if (Math.random() < 0.5) {
       embed.setImage("https://c.tenor.com/MEOjAEYcT2cAAAAd/bonk.gif");
     }
 
