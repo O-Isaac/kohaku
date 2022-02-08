@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const {
   CommandInteraction,
-  MessageEmbed,
   MessageSelectMenu,
   MessageActionRow,
 } = require("discord.js");

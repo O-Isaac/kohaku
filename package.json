@@ -2,13 +2,17 @@
   "dependencies": {
     "@discordjs/builders": "^0.12.0",
     "@discordjs/rest": "^0.3.0",
+    "@keyv/redis": "^2.2.2",
     "canvas": "^2.9.0",
     "discord-api-types": "^0.26.1",
     "discord-xp": "^1.1.16",
     "discord.js": "13.6.0",
+    "keyv": "^4.1.0",
     "kleur": "^4.1.4",
     "log-symbols": "^5.1.0",
+    "node-cron": "^3.0.0",
     "supports-color": "^9.2.1",
+    "timestring": "^6.0.0",
     "treeify": "^1.1.0"
   },
   "name": "kohaku",
