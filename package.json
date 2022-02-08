@@ -11,6 +11,7 @@
     "kleur": "^4.1.4",
     "log-symbols": "^5.1.0",
     "node-cron": "^3.0.0",
+    "star-labs": "^1.1.2",
     "supports-color": "^9.2.1",
     "timestring": "^6.0.0",
     "treeify": "^1.1.0"
