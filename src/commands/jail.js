@@ -40,6 +40,10 @@ module.exports = {
       .setImage("https://c.tenor.com/ro-VMfAVHKMAAAAC/new-gulag.gif")
       .setTimestamp();
 
+    if (Math.random() < 0.05) {
+      embed.setImage("https://c.tenor.com/MEOjAEYcT2cAAAAd/bonk.gif");
+    }
+
     // Time jail
     let timeMS = 0;
 
