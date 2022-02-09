@@ -3,6 +3,7 @@ const { stripIndents } = require("common-tags");
 const { CommandInteraction, MessageEmbed, Message } = require("discord.js");
 const FGO = require("../services/fgo.fandom");
 const Genshin = require("../services/genshin.fandom");
+const Arknights = require("../services/arknights.fandom");
 
 const axios = require("axios").default;
 
@@ -26,6 +27,19 @@ module.exports = {
         .setName("genshin")
         .setDescription(
           "Busca informacion en el wiki de la comunidad de genshin impact"
+        )
+        .addStringOption((option) =>
+          option
+            .setRequired(true)
+            .setName("busqueda")
+            .setDescription("La busqueda a realizar")
+        )
+    )
+    .addSubcommand((command) =>
+      command
+        .setName("arknights")
+        .setDescription(
+          "Busca informacion en el wiki de la comunidad de Arknights"
         )
         .addStringOption((option) =>
           option
@@ -61,12 +75,23 @@ module.exports = {
           "https://genshin-impact.fandom.com/es/wiki/Wiki_Genshin_Impact"
         );
 
+      const embedArknights = new MessageEmbed()
+        .setColor("PURPLE")
+        .setTitle("Arknights Wiki – Fandom")
+        .setURL("https://arknights.fandom.com/wiki/Arknights_Wiki")
+        .setThumbnail(
+          "https://static.wikia.nocookie.net/mrfz/images/e/e6/Site-logo.png/revision/latest"
+        );
+
       // Functions
       const getPagesFGO = async (search) =>
         (await axios.get(FGO(search))).data.query.search;
 
       const getPagesGenshin = async (search) =>
         (await axios.get(Genshin(search))).data.query.search;
+
+      const getPagesArknights = async (search) =>
+        (await axios.get(Arknights(search))).data.query.search;
 
       const setResults = (embed, results, firstResult, url) => {
         embed.setDescription(stripIndents`
@@ -120,6 +145,24 @@ module.exports = {
         );
 
         return interaction.reply({ embeds: [embedGenshin] });
+      }
+
+      if (group === "arknights") {
+        const search = interaction.options.getString("busqueda") || false;
+        const results = await getPagesArknights(search);
+
+        if (!results.length > 0) throw Error("No se encontraron resultados");
+
+        const firstResult = results[0];
+
+        setResults(
+          embedArknights,
+          results,
+          firstResult,
+          "https://arknights.fandom.com"
+        );
+
+        return interaction.reply({ embeds: [embedArknights] });
       }
 
       return interaction.reply({
