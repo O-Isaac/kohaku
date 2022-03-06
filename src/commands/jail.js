@@ -2,6 +2,8 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { CommandInteraction, MessageEmbed, User } = require("discord.js");
 const timestring = require("timestring");
 const jailed = new Map();
+export const usersJailed = new Set();
+
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -113,6 +115,7 @@ module.exports = {
     const unjaild = () => {
       clearInterval(jailed.get(user.id));
       jailed.delete(user.id);
+      usersJailed.delete(user.id);
     };
 
     // Check if has role "Prisionero" remove it else add it
@@ -124,9 +127,12 @@ module.exports = {
       embed.setFields([]);
 
       jailed.has(user.id) ? unjaild() : null;
+      usersJailed.has(user.id) ? usersJailed.delete(user.id) : null;
     } else {
       await user.roles.add(prisonerRole);
+      usersJailed.add(user.id);
     }
+
 
     // Send Message function
     const sendMessage = async (embed) => {
