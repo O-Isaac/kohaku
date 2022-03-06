@@ -2,8 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { CommandInteraction, MessageEmbed, User } = require("discord.js");
 const timestring = require("timestring");
 const jailed = new Map();
-export const usersJailed = new Set();
-
+const { usersJailed } = require("../utils/UserJailed");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -173,3 +172,4 @@ module.exports = {
     return sendMessage(embed);
   },
 };
+

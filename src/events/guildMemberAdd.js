@@ -1,6 +1,6 @@
 const { GuildMember } = require("discord.js");
 const welcome = require("../utils/welcome/GenerateImage");
-const { usersJailed } = require("../commands/jail");
+const { usersJailed } = require("../utils/UserJailed");
 
 module.exports = {
   name: "guildMemberAdd",
