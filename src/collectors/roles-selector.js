@@ -27,6 +27,10 @@ module.exports = {
       ? member.roles.add(roles.get("937802754804572240"))
       : member.roles.remove(roles.get("937802754804572240"));
 
+    values.includes("genshin-impact")
+      ? member.roles.add(roles.get("807934748386394112"))
+      : member.roles.remove(roles.get("807934748386394112"));
+
     return interaction.reply({
       content: `${
         interaction.user.username

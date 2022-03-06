@@ -43,6 +43,12 @@ module.exports = {
         value: "arknight",
         emoji: emoji.get("824817023837011968"),
       },
+      {
+        label: "Genshin Impact",
+        description: "Informate sobre las noticias de genshin impact",
+        value: "genshin-impact",
+        emoji: emoji.get("807933236655030313"),
+      },
     ];
 
     // Selector
