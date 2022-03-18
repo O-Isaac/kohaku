@@ -18,11 +18,21 @@ nsfw.on("nsfw", (message, data) => {
     .setDescription(
       "Este mensaje contiene contenido NSFW, por favor, no lo envíes a este canal."
     )
-    .addField("Detections", data.detections.join(", "));
+    .addField("Confidence", String(data.confidence), true)
+    .addField("Es NSFW", String(data.isNSFW), true)
+    .addField(
+      "Detecciones",
+      `${
+        data.detections.length > 0
+          ? "``" + data.detections.join(", ") + "``"
+          : "Ninguna"
+      }`,
+      true
+    );
 
-  const isNFSW = data.confidence.replace("%", "") > 20;
+  console.log(data);
 
-  if (data.isNSFW && isNFSW) {
+  if (data.isNSFW) {
     message.delete();
     message.channel.send({ embeds: [embed] });
   }
