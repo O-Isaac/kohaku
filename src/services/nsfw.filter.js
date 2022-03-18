@@ -24,10 +24,9 @@ nsfw.on("nsfw", (message, data) => {
       "Detecciones",
       `${
         data.detections.length > 0
-          ? "``" + data.detections.join(", ") + "``"
+          ? data.detections.map((data) => "`" + data + "`").join("\n")
           : "Ninguna"
-      }`,
-      true
+      }`
     );
 
   console.log(data);
