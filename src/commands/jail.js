@@ -23,6 +23,7 @@ module.exports = {
         )
     ),
   permissions: ["KICK_MEMBERS", "BAN_MEMBERS", "MODERATE_MEMBERS"],
+  roles: [954523628177866793],
   /**
    * @param {CommandInteraction} interaction
    */
@@ -132,7 +133,6 @@ module.exports = {
       usersJailed.add(user.id);
     }
 
-
     // Send Message function
     const sendMessage = async (embed) => {
       return interaction.replied
@@ -172,4 +172,3 @@ module.exports = {
     return sendMessage(embed);
   },
 };
-
