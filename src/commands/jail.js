@@ -23,7 +23,7 @@ module.exports = {
         )
     ),
   permissions: ["KICK_MEMBERS", "BAN_MEMBERS", "MODERATE_MEMBERS"],
-  roles: [954523628177866793],
+  roles: ["954523628177866793"],
   /**
    * @param {CommandInteraction} interaction
    */
