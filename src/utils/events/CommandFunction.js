@@ -9,11 +9,14 @@ async function InteractionCommandFunc(interaction) {
 
   if (!command) return;
 
-  const hasRole = interaction.member.roles.cache.some((role) =>
-    command.roles.includes(role.id)
-  );
+  const roles = command?.roles ?? [];
 
   try {
+    const hasRole =
+      roles.length > 0
+        ? interaction.member.roles.cache.some((role) => roles.includes(role.id))
+        : true;
+
     if (!hasRole) {
       // Check if the user has the required roles
       return interaction.reply({
