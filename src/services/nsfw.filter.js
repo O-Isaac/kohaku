@@ -1,7 +1,5 @@
 const { Message, MessageEmbed } = require("discord.js");
-const fetch = require("node-fetch");
 const { AntiNsfwClient } = require("discord-antinsfw");
-
 const nsfw = new AntiNsfwClient();
 
 /**
@@ -28,8 +26,6 @@ nsfw.on("nsfw", (message, data) => {
           : "Ninguna"
       }`
     );
-
-  console.log(data);
 
   if (data.isNSFW) {
     message.delete();
