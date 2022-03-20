@@ -9,7 +9,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("roles")
     .setDescription("Crea un selector de roles en un canal."),
-  permissions: ["KICK_MEMBERS", "BAN_MEMBERS", "MODERATE_MEMBERS"],
+  roles: ["613581775041593354"],
   /**
    * @param {CommandInteraction} interaction
    */

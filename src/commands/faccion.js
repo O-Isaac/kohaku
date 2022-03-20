@@ -1,0 +1,70 @@
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const {
+  CommandInteraction,
+  MessageSelectMenu,
+  MessageActionRow,
+} = require("discord.js");
+
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("facciones")
+    .setDescription("Crea un selector de facciones en el canal."),
+  roles: ["613581775041593354"],
+  /**
+   * @param {CommandInteraction} interaction
+   */
+  async execute(interaction) {
+    // Emojis cache
+    const emoji = interaction.guild.emojis.cache;
+
+    // Opciones
+    const roles = [
+      {
+        label: "Bishamontent",
+        description: "Faccion de Nagao Kagetora.",
+        value: "nagao",
+        emoji: emoji.get("955094923080773694"),
+      },
+      {
+        label: "Culto Vacunado por Kohaku 5G",
+        description: "Faccion de Kohaku",
+        value: "kohaku",
+        emoji: emoji.get("824799543899062273"),
+      },
+      {
+        label: "Piguereto de Circe NP3",
+        description: "Faccion de Circe",
+        value: "circe",
+        emoji: emoji.get("844704981927723048"),
+      },
+      {
+        label: "Cortesana de Tama",
+        description: "Facción de Tamamo no Mae",
+        value: "tamamo",
+        emoji: emoji.get("852059602538594375"),
+      },
+    ];
+
+    // Selector
+    const menuRoles = new MessageSelectMenu()
+      .setCustomId("roles-selector-facciones")
+      .setPlaceholder("¿Que faccion pertenes?")
+      .setMaxValues(1)
+      .setMinValues(1)
+      .addOptions(roles);
+
+    // Componente
+    const row = new MessageActionRow({ components: [menuRoles] });
+
+    await interaction.channel.send({
+      content:
+        "Bienvenido ha proyecto grand order ¿Qué rol te gustaría escoger?",
+      components: [row],
+    });
+
+    await interaction.reply({
+      content: "El selector de roles se ha creado con exito!",
+      ephemeral: true,
+    });
+  },
+};
