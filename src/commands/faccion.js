@@ -43,6 +43,12 @@ module.exports = {
         value: "tamamo",
         emoji: emoji.get("852059602538594375"),
       },
+      {
+        label: "Exclavos de morgan",
+        description: "Facción de Morgan Le Fay God",
+        value: "morgan",
+        emoji: emoji.get("960990607776579594"),
+      },
     ];
 
     // Selector
