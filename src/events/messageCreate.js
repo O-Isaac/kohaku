@@ -8,6 +8,6 @@ module.exports = {
    * @param {Message} message
    */
   async execute(message) {
-    // NSFWFilter(message);
+    NSFWFilter(message);
   },
 };
