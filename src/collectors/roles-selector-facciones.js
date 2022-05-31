@@ -31,6 +31,10 @@ module.exports = {
       ? member.roles.add(roles.get("960990704979574794"))
       : member.roles.remove(roles.get("960990704979574794"));
 
+    values.includes("shuten")
+      ? member.roles.add(roles.get("979909507696197632"))
+      : member.roles.remove(roles.get("979909507696197632"));
+
     return interaction.reply({
       content: `${
         interaction.user.username

@@ -49,6 +49,12 @@ module.exports = {
         value: "morgan",
         emoji: emoji.get("960990607776579594"),
       },
+      {
+        label: "Alcoholicos de Shuten",
+        description: "Facción de Shuten y a los simps de onis",
+        value: "shuten",
+        emoji: emoji.get("979521949497712671"),
+      }
     ];
 
     // Selector
