@@ -69,19 +69,20 @@ module.exports = {
       .addOptions(roles);
 
     const menuRoles2 = new MessageSelectMenu()
-      .setCustomId("roles-selector-facciones-2")
+      .setCustomId("roles-selector-facciones")
       .setPlaceholder("¿Que faccion pertenes? ¡Aqui hay mas roles!")
       .setMaxValues(1)
       .setMinValues(1)
       .addOptions(roles2);
 
     // Componente
-    const row = new MessageActionRow({ components: [menuRoles, menuRoles2] });
+    const row = new MessageActionRow({ components: [menuRoles] });
+    const row2 = new MessageActionRow({ components: [menuRoles2] });
 
     await interaction.channel.send({
       content:
         "Bienvenido ha proyecto grand order ¿Qué rol te gustaría escoger?",
-      components: [row],
+      components: [row, row2],
     });
 
     await interaction.reply({
