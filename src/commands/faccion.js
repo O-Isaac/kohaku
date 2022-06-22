@@ -69,7 +69,7 @@ module.exports = {
       .addOptions(roles);
 
     const menuRoles2 = new MessageSelectMenu()
-      .setCustomId("roles-selector-facciones")
+      .setCustomId("roles-selector-facciones-2")
       .setPlaceholder("¿Que faccion pertenes? ¡Aqui hay mas roles!")
       .setMaxValues(1)
       .setMinValues(1)
