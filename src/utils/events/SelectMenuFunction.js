@@ -10,7 +10,6 @@ const overrides = {
  */
 async function SelectMenuFunction(interaction) {
   const customId = interaction.customId;
-
   let id = customId;
 
   const Overrides = Object.values(overrides);
