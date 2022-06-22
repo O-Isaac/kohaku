@@ -20,18 +20,6 @@ module.exports = {
     // Opciones
     const roles = [
       {
-        label: "Bishamontent",
-        description: "Faccion de Nagao Kagetora.",
-        value: "nagao",
-        emoji: emoji.get("955094923080773694"),
-      },
-      {
-        label: "Culto Vacunado por Kohaku 5G",
-        description: "Faccion de Kohaku",
-        value: "kohaku",
-        emoji: emoji.get("824799543899062273"),
-      },
-      {
         label: "Piguereto de Circe NP3",
         description: "Faccion de Circe",
         value: "circe",
@@ -49,12 +37,27 @@ module.exports = {
         value: "morgan",
         emoji: emoji.get("960990607776579594"),
       },
+    ];
+
+    const roles2 = [
       {
         label: "Alcoholicos de Shuten",
         description: "Facción de Shuten y a los simps de onis",
         value: "shuten",
         emoji: emoji.get("979521949497712671"),
-      }
+      },
+      {
+        label: "Bishamontent",
+        description: "Faccion de Nagao Kagetora.",
+        value: "nagao",
+        emoji: emoji.get("955094923080773694"),
+      },
+      {
+        label: "Culto Vacunado por Kohaku 5G",
+        description: "Faccion de Kohaku",
+        value: "kohaku",
+        emoji: emoji.get("824799543899062273"),
+      },
     ];
 
     // Selector
@@ -65,8 +68,15 @@ module.exports = {
       .setMinValues(1)
       .addOptions(roles);
 
+    const menuRoles2 = new MessageSelectMenu()
+      .setCustomId("roles-selector-facciones")
+      .setPlaceholder("¿Que faccion pertenes? ¡Aqui hay mas roles!")
+      .setMaxValues(1)
+      .setMinValues(1)
+      .addOptions(roles2);
+
     // Componente
-    const row = new MessageActionRow({ components: [menuRoles] });
+    const row = new MessageActionRow({ components: [menuRoles, menuRoles2] });
 
     await interaction.channel.send({
       content:
