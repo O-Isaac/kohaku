@@ -17,8 +17,8 @@ module.exports = {
       const member = guild.members.cache.get("344435921636294657");
 
       if (member) {
-        if (member.nickname !== "Tsundere Tacaña (Circe Kill)") {
-          member.setNickname("Tsundere Tacaña (Circe Kill)");
+        if (member.nickname !== "Castoria'nt") {
+          member.setNickname("Castoria'nt");
         }
       }
     }, 500);
