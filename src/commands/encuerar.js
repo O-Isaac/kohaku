@@ -40,13 +40,16 @@ module.exports = {
     async execute(interaction) {
       const user = interaction.options.getMember("crush") || false;
       const author = interaction.user;
+      const image = images[Math.floor(Math.random()*images.length)]
 
       const embed = new MessageEmbed()
         .setColor("PURPLE")
-        .setImage(images[Math.floor(Math.random()*images.length)])
+        .setImage(image)
         .setTimestamp();
 
-      if (user) embed.setDescription(`**${author.username}** encuero a **${user.username}**`)
+      console.log(image)
+
+      if (user) embed.setDescription(`**${author.username}** encuero a **${user.user.username}**`)
       else embed.setDescription(`**${interaction.client.user.username}** encuero a **${author.username}**`)
   
       return interaction.reply({
