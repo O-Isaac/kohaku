@@ -1,3 +1,6 @@
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const { CommandInteraction, MessageEmbed } = require("discord.js");
+
 const images = [
     'https://i.imgur.com/cO4RHth.gif',
     'https://i.imgur.com/lsBViTX.gif',
