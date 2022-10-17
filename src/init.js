@@ -13,5 +13,8 @@ Handlers.use.commands(kohaku);
 Handlers.use.events(kohaku, logger);
 Handlers.use.collectors(kohaku);
 
+// Deploy Commands
+require('./deploy-commands.js');
+
 // Login
 kohaku.login(process.env.DISCORD_TOKEN);
