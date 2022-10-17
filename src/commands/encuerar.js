@@ -26,7 +26,7 @@ const images = [
 
 module.exports = {
     data: new SlashCommandBuilder()
-      .setName("Encuerar")
+      .setName("encuerar")
       .setDescription("Encuera a un usuario ( ￣▽￣)ﾉ")
       .addUserOption((option) =>
         option
