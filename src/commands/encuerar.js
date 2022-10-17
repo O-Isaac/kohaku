@@ -47,12 +47,24 @@ module.exports = {
         .setImage(image)
         .setTimestamp();
 
-      console.log(image)
+
+      // if (user.id === "733475488017678407") {
+      //   return interaction.reply({
+      //     content: "No puedes encuerar a mi creador! (ノಠ益ಠ)ノ彡┻━┻"
+      //   })
+      // }
+
+      if (user.id === "626504284267216926") {
+        return interaction.reply({
+          content: "No puedes encuerar a mi dios! (ノಠ益ಠ)ノ彡┻━┻"
+        })
+      }
 
       if (user) embed.setDescription(`**${author.username}** encuero a **${user.user.username}**`)
       else embed.setDescription(`**${interaction.client.user.username}** encuero a **${author.username}**`)
   
       return interaction.reply({
+        content: `┬┴┬┴┤ ͜ʖ ͡°) ├┬┴┬┴\n${user}-sama **${author.username}** te acaba de encuerar`,
         embeds: [embed],
       });
     },
