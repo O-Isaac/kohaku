@@ -38,14 +38,16 @@ module.exports = {
      * @param {CommandInteraction} interaction
      */
     async execute(interaction) {
-      const user = interaction.options.getMember("crush") || null;
+      const user = interaction.options.getMember("crush") || false;
       const author = interaction.user;
 
       const embed = new MessageEmbed()
         .setColor("PURPLE")
-        .setDescription(`${author.username} encuero a ${user.username ?? author.username}`)
         .setImage(images[Math.floor(Math.random()*images.length)])
         .setTimestamp();
+
+      if (user) embed.setDescription(`**${author.username}** encuero a **${user.username}**`)
+      else embed.setDescription(`**${interaction.client.user.username}** encuero a **${author.username}**`)
   
       return interaction.reply({
         embeds: [embed],
