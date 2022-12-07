@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { CommandInteraction, MessageEmbed, User } = require("discord.js");
 const timestring = require("timestring");
-const jailed = new Map();
-const { usersJailed } = require("../utils/UserJailed");
+
+const jail = new Map()
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -16,7 +16,7 @@ module.exports = {
     )
     .addStringOption((option) =>
       option
-        .setRequired(false)
+        .setRequired(true)
         .setName("tiempo")
         .setDescription(
           "El tiempo (s | m | h | d) que el usuario permanecerá en el gulag "
@@ -28,147 +28,91 @@ module.exports = {
    * @param {CommandInteraction} interaction
    */
   async execute(interaction) {
-    // Get user to jail
+    // Get users
     const user = interaction.options.getMember("victima");
+    const author = await interaction.guild.members.fetch({
+      user: interaction.user.id
+    })
 
-    // Embed
-    const embed = new MessageEmbed()
-      .setDescription(
-        `**${user.user.username}** ha sido encarcelado por **${interaction.user.username}**`
-      )
-      .setColor("PURPLE")
-      .setThumbnail("https://i.imgur.com/YsNLH6X.png")
-      .setImage("https://c.tenor.com/ro-VMfAVHKMAAAAC/new-gulag.gif")
-      .setTimestamp();
+    // Get Prisioner Role
+    const prisionerRol = await interaction.guild.roles.fetch("1049156977902768228", {
+      cache: true
+    })
 
-    if (Math.random() < 0.5) {
-      embed.setImage("https://c.tenor.com/MEOjAEYcT2cAAAAd/bonk.gif");
-    }
-
-    // Time jail
-    let timeMS = 0;
-
-    if (user.user.id === interaction.user.id) {
+    // Check name
+    if (user.user.username === author.user.username) {
       return interaction.reply({
-        content: "No puedes encarcelarte a ti mismo",
-        ephemeral: true,
-      });
+        content: `¿**${author.user.username}-sama** por que te quieres encarcelar estas loco?`,
+        ephemeral: true
+      })
     }
 
-    const authorUser = await interaction.guild.members.fetch(
-      interaction.user.id
-    );
+    // Check if jailed & unjail
+    if(prisionerRol.members.has(user.id) || jail.has(user.id)) {
+      jail.delete(user.id)
+      user.roles.remove(prisionerRol);
 
-    if (user.roles.highest.position >= authorUser.roles.highest.position) {
       return interaction.reply({
-        content:
-          "No puedes encarcelar a un usuario con un rol mayor o igual a tu rol",
+        content: `**${author.user.username}-sama** acabas de sacar a **${user.user.username}-sama** de su prision`,
+        ephemeral: true
+      })
+    }
+
+    // Get Roles
+    const userRole = user.roles.highest
+    const authorRole = author.roles.highest
+
+    // Check position roles
+    if (authorRole.position <= userRole.position) {
+      return interaction.reply({
+        content: `**${author.user.username}-sama** no puedo encarcela a **${user.user.username}-sama** por que su rol es superior al suyo.`,
+        ephemeral: true
+      })
+    }
+
+    // Get time in prision & jail
+    try {
+      const timeInPrision = interaction.options.getString("tiempo")
+      const timePrision = timestring(timeInPrision, "ms")
+      
+      user.roles.add(prisionerRol)
+      jail.set(user.id, setTimeout(() => {
+        const freeMessage = new MessageEmbed()
+          .setDescription(`El usuario **${user.user.username}** ha sido liberado.`)
+          .setColor("RANDOM")
+          .setImage("https://media.tenor.com/-B_ymXwK6xUAAAAC/cat-jailbreak.gif")
+       
+          user.roles.remove(prisionerRol)
+        jail.delete(user.id)
+       
+        interaction.channel.send({
+          embeds: [freeMessage]
+        })
+      }, timePrision))
+
+      const timestamp = Math.floor(Date.now() / 1000)
+      const timestampPrision = Math.floor(timePrision / 1000)
+
+      const jailMessage = new MessageEmbed()
+        .setDescription(`El usuario **${user.user.username}** ha sido enviado al gulag. \rSaldra <t:${timestamp + timestampPrision}:R>`)
+        .setColor("RANDOM")
+        .setImage("https://media.tenor.com/ro-VMfAVHKMAAAAC/new-gulag.gif")
+
+      return interaction.reply({
+        embeds: [jailMessage],
+        content: `**${author.user.username}-sama** acabas de enjaular a **${user.user.username}-sama**`,
+      })
+
+    } catch (error) {
+      return interaction.reply({
+        content: `**${author.user.username}-sama** no he podido enjaular a **${user.user.username}-sama** debido al siguiente error:
+        \r${error.message}
+        `,
         ephemeral: true,
-      });
+        files: ["https://i.imgur.com/EQGWOB1.png"]
+      })
     }
 
-    // Get "Prisionero" role
-    const prisonerRole = interaction.guild.roles.cache.find(
-      (role) => role.name === "Prisionero"
-    );
 
-    // get time to jail
-    const time = interaction.options.getString("tiempo");
-
-    // Check time to jail
-    if (time) {
-      try {
-        if (jailed.has(user.id)) {
-          return interaction.reply({
-            content: "Ya tiene un fecha de liberación",
-          });
-        }
-
-        const timeToJail = timestring(time);
-
-        timeMS = timeToJail * 1000;
-      } catch (err) {
-        embed.setDescription(err.message);
-        embed
-          .addFields([
-            {
-              name: "Valores de tiempos válidos",
-              value: `
-            \`ms, milli, millisecond, milliseconds\`
-            \`s, sec, secs, second, seconds\` 
-            \`m, min, mins, minute, minutes\` 
-            \`h, hr, hrs, hour, hours\`
-            \`d, day, days\`
-            \`w, week, weeks\`
-            \`mon, mth, mths, month, months\`
-            \`y, yr, yrs, year, years\`
-            `,
-            },
-          ])
-          .setImage(null);
-
-        return interaction.reply({ embeds: [embed], ephemeral: true });
-      }
-    }
-
-    // Remove timeout and remove from jailed
-    const unjaild = () => {
-      clearInterval(jailed.get(user.id));
-      jailed.delete(user.id);
-      usersJailed.delete(user.id);
-    };
-
-    // Check if has role "Prisionero" remove it else add it
-    if (user.roles.cache.has(prisonerRole.id)) {
-      await user.roles.remove(prisonerRole);
-
-      embed.setDescription(`${user.user.tag} ha sido liberado`);
-      embed.setImage(null);
-      embed.setFields([]);
-
-      jailed.has(user.id) ? unjaild() : null;
-      usersJailed.has(user.id) ? usersJailed.delete(user.id) : null;
-    } else {
-      await user.roles.add(prisonerRole);
-      usersJailed.add(user.id);
-    }
-
-    // Send Message function
-    const sendMessage = async (embed) => {
-      return interaction.replied
-        ? interaction.channel.send({ embeds: [embed] })
-        : interaction.reply({ embeds: [embed] });
-    };
-
-    if (timeMS > 0) {
-      const timestamp = Math.floor((Date.now() + timeMS) / 1000);
-      embed.addField("Volvera a salir", `<t:${timestamp}:R>`);
-
-      jailed.set(
-        user.id,
-        setInterval(
-          ((index) => () => {
-            // perform the action with your array
-
-            if (index >= timeMS) {
-              user.roles.remove(prisonerRole);
-              clearInterval(jailed.get(user.id));
-              jailed.delete(user.id);
-
-              embed.setDescription(`${user.user.tag} ha sido liberado`);
-              embed.setImage(null);
-              embed.setFields([]);
-
-              sendMessage(embed);
-            }
-
-            index += 1000;
-          })(0),
-          1000
-        )
-      );
-    }
-
-    return sendMessage(embed);
   },
 };
