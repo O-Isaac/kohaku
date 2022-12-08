@@ -16,6 +16,6 @@ jobs:
     - name: Execute SSH commmands on remote server
       uses: JimCronqvist/action-ssh@master
       with:
-        hosts: 'ubuntu@ec2-3-92-194-144.compute-1.amazonaws.com'
+        hosts: ${{ secrets.PRIVATE_SERVER }}
         privateKey: ${{ secrets.PRIVATE_KEY }}
         command: sh update_kohaku.sh
