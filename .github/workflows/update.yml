@@ -1,0 +1,21 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Updating kohaku on server
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Execute SSH commmands on remote server
+      uses: JimCronqvist/action-ssh@master
+      with:
+        hosts: 'ubuntu@ec2-3-92-194-144.compute-1.amazonaws.com'
+        privateKey: ${{ secrets.PRIVATE_KEY }}
+        command: sh update_kohaku.sh
