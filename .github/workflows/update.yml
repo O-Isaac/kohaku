@@ -1,0 +1,36 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Updating kohaku on server
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Updating Kohaku
+      uses: appleboy/ssh-action@master
+      env:
+        WEBHOOK: ${{ secrets.WEBHOOK }}
+      with:
+        host: ${{ secrets.PRIVATE_HOST }}
+        username: ${{ secrets.PRIVATE_USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: ${{ secrets.PRIVATE_PORT }}
+        envs: WEBHOOK
+        script: |
+          cd kohaku
+          git pull
+          pm2 restart 3 > /dev/null 2>&1 &
+          curl $WEBHOOK \
+          -H 'accept: application/json' \
+          -H 'content-type: application/json' \
+          -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.42' \
+          --data-raw '{"content":"<:KohaDaleLike:852059604002013196> **Kohaku** ha sido actualizada.","embeds":null,"attachments":[]}' \
+          --compressed > /dev/null 2>&1 &
+        
