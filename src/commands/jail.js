@@ -16,7 +16,7 @@ module.exports = {
     )
     .addStringOption((option) =>
       option
-        .setRequired(true)
+        .setRequired(false)
         .setName("tiempo")
         .setDescription(
           "El tiempo (s | m | h | d) que el usuario permanecerá en el gulag "
@@ -57,6 +57,15 @@ module.exports = {
         ephemeral: true
       })
     }
+    
+    const timeInPrision = interaction.options.getString("tiempo")
+    
+    if(!timeInPrision) {
+      return interaction.reply({
+        content: `**${author.user.username}-sama** no puedo encarcela a **${user.user.username}-sama** por que su no has especificado el tiempo`,
+        ephemeral: true
+      })
+    }
 
     // Get Roles
     const userRole = user.roles.highest
@@ -72,7 +81,6 @@ module.exports = {
 
     // Get time in prision & jail
     try {
-      const timeInPrision = interaction.options.getString("tiempo")
       const timePrision = timestring(timeInPrision, "ms")
       
       user.roles.add(prisionerRol)
@@ -83,11 +91,11 @@ module.exports = {
           .setImage("https://media.tenor.com/-B_ymXwK6xUAAAAC/cat-jailbreak.gif")
        
           user.roles.remove(prisionerRol)
-        jail.delete(user.id)
+          jail.delete(user.id)
        
-        interaction.channel.send({
-          embeds: [freeMessage]
-        })
+          interaction.channel.send({
+            embeds: [freeMessage]
+          })
       }, timePrision))
 
       const timestamp = Math.floor(Date.now() / 1000)
