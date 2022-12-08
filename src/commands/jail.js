@@ -91,15 +91,13 @@ module.exports = {
     
     // Get time in prision & jail
     try {
-      const timeInPrision = interaction.options.getString("tiempo")
+      let timeInPrision = interaction.options.getString("tiempo")
+      if(!timeInPrision) timeInPrision = "1h" 
       const timePrision = timestring(timeInPrision, "ms")
 
-      
       const timestamp = Math.floor(Date.now() / 1000)
       const timestampPrision = Math.floor(timePrision / 1000)
       const dateCron = new Date(Date.now() + timePrision)
-
-      console.log(dateCron.toLocaleString())
 
       const jailCron = new CronJob(dateCron, function() {
         user.roles.remove(prisionerRol)
