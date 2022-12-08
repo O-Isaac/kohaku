@@ -20,4 +20,8 @@ jobs:
         username: ${{ secrets.PRIVATE_USERNAME }}
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PRIVATE_PORT }}
-        script: sh update_kohaku.sh
+        script: |
+          cd kohaku
+          git pull
+          pm2 restart 3
+        
