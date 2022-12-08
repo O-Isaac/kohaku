@@ -13,10 +13,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Execute SSH commmands on remote server
-      uses: JimCronqvist/action-ssh@master
+    - name: executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
       with:
-        hosts: ${{ secrets.SERVER }}
-        privateKey: ${{ secrets.PRIVATE_KEY }}
-        debug: false
-        command: ls -lah
+        host: ${{ secrets.PRIVATE_HOST }}
+        username: ${{ secrets.PRIVATE_USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: ${{ secrets.PRIVATE_PORT }}
+        script: sh update_kohaku.sh
