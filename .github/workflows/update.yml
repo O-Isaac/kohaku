@@ -23,5 +23,5 @@ jobs:
         script: |
           cd kohaku
           git pull
-          pm2 restart 3
+          pm2 restart 3 > /dev/null 2>&1 &
         
