@@ -4,6 +4,17 @@ const timestring = require("timestring");
 
 const jail = new Map()
 
+const freeAnnouncement = (user, interaction) => {
+  const freeMessage = new MessageEmbed()
+    .setDescription(`El usuario **${user.user.username}** ha sido liberado.`)
+    .setColor("RANDOM")
+    .setImage("https://media.tenor.com/-B_ymXwK6xUAAAAC/cat-jailbreak.gif")
+
+  interaction.channel.send({
+    embeds: [freeMessage]
+  })
+}
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("gulag")
@@ -52,9 +63,11 @@ module.exports = {
       if(jail.has(user.id)) {
         const jailTimeout = jail.get(user.id)
         clearTimeout(jailTimeout)
-      } else {
-        user.roles.remove(prisionerRol);
+        jail.delete(user.id)
       }
+      
+      user.roles.remove(prisionerRol);
+      freeAnnouncement(user, interaction)
 
       return interaction.reply({
         content: `**${author.user.username}-sama** acabas de sacar a **${user.user.username}-sama** de su prision`,
@@ -62,19 +75,11 @@ module.exports = {
       })
     }
     
-    const timeInPrision = interaction.options.getString("tiempo")
     
-    if(!timeInPrision) {
-      return interaction.reply({
-        content: `**${author.user.username}-sama** no puedo encarcela a **${user.user.username}-sama** por que su no has especificado el tiempo`,
-        ephemeral: true
-      })
-    }
-
     // Get Roles
     const userRole = user.roles.highest
     const authorRole = author.roles.highest
-
+    
     // Check position roles
     if (authorRole.position <= userRole.position) {
       return interaction.reply({
@@ -82,25 +87,20 @@ module.exports = {
         ephemeral: true
       })
     }
-
+    
     // Get time in prision & jail
     try {
+      const timeInPrision = interaction.options.getString("tiempo")
       const timePrision = timestring(timeInPrision, "ms")
-      
-      user.roles.add(prisionerRol)
-      jail.set(user.id, setTimeout(() => {
-        const freeMessage = new MessageEmbed()
-          .setDescription(`El usuario **${user.user.username}** ha sido liberado.`)
-          .setColor("RANDOM")
-          .setImage("https://media.tenor.com/-B_ymXwK6xUAAAAC/cat-jailbreak.gif")
-       
+
+      const jailTime = setTimeout(() => {
           user.roles.remove(prisionerRol)
           jail.delete(user.id)
-       
-          interaction.channel.send({
-            embeds: [freeMessage]
-          })
-      }, timePrision))
+          freeAnnouncement(user, interaction)
+      }, timePrision)
+
+      user.roles.add(prisionerRol)
+      jail.set(user.id, jailTime)
 
       const timestamp = Math.floor(Date.now() / 1000)
       const timestampPrision = Math.floor(timePrision / 1000)
