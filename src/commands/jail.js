@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { CommandInteraction, MessageEmbed, User } = require("discord.js");
+const { CronJob } = require("cron");
 const timestring = require("timestring");
 
 const jail = new Map()
@@ -61,8 +62,8 @@ module.exports = {
     // Check if jailed & unjail
     if(prisionerRol.members.has(user.id)) {
       if(jail.has(user.id)) {
-        const jailTimeout = jail.get(user.id)
-        clearTimeout(jailTimeout)
+        const JailCron = jail.get(user.id)
+        JailCron.stop();
         jail.delete(user.id)
       }
       
@@ -93,17 +94,23 @@ module.exports = {
       const timeInPrision = interaction.options.getString("tiempo")
       const timePrision = timestring(timeInPrision, "ms")
 
-      const jailTime = setTimeout(() => {
-          user.roles.remove(prisionerRol)
-          jail.delete(user.id)
-          freeAnnouncement(user, interaction)
-      }, timePrision)
-
-      user.roles.add(prisionerRol)
-      jail.set(user.id, jailTime)
-
+      
       const timestamp = Math.floor(Date.now() / 1000)
       const timestampPrision = Math.floor(timePrision / 1000)
+      const dateCron = new Date(Date.now() + timePrision)
+
+      console.log(dateCron.toLocaleString())
+
+      const jailCron = new CronJob(dateCron, function() {
+        user.roles.remove(prisionerRol)
+        jail.delete(user.id)
+        freeAnnouncement(user, interaction)
+        jailCron.stop();
+      })
+
+      user.roles.add(prisionerRol)
+      jail.set(user.id, jailCron)
+      jailCron.start()
 
       const jailMessage = new MessageEmbed()
         .setDescription(`El usuario **${user.user.username}** ha sido enviado al gulag. \rSaldra <t:${timestamp + timestampPrision}:R>`)
