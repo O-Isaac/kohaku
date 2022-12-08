@@ -48,9 +48,13 @@ module.exports = {
     }
 
     // Check if jailed & unjail
-    if(prisionerRol.members.has(user.id) || jail.has(user.id)) {
-      jail.delete(user.id)
-      user.roles.remove(prisionerRol);
+    if(prisionerRol.members.has(user.id)) {
+      if(jail.has(user.id)) {
+        const jailTimeout = jail.get(user.id)
+        clearTimeout(jailTimeout)
+      } else {
+        user.roles.remove(prisionerRol);
+      }
 
       return interaction.reply({
         content: `**${author.user.username}-sama** acabas de sacar a **${user.user.username}-sama** de su prision`,
