@@ -63,6 +63,7 @@ module.exports = {
     if(prisionerRol.members.has(user.id)) {
       if(jail.has(user.id)) {
         const JailCron = jail.get(user.id)
+        console.log(JailCron)
         JailCron.stop();
         jail.delete(user.id)
       }
