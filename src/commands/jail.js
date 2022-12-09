@@ -5,7 +5,7 @@ const timestring = require("timestring");
 
 const jail = new Map()
 
-const freeAnnouncement = (user, interaction) => {
+function freeAnnouncement (user, interaction) {
   const freeMessage = new MessageEmbed()
     .setDescription(`El usuario **${user.user.username}** ha sido liberado.`)
     .setColor("RANDOM")
@@ -67,7 +67,7 @@ module.exports = {
         JailCron.stop();
         jail.delete(user.id)
       }
-      
+      console.log(user.id)
       user.roles.remove(prisionerRol);
       freeAnnouncement(user, interaction)
 
