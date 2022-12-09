@@ -6,7 +6,7 @@ const timestring = require("timestring");
 /** @type {Map<string, schedule.Job>} jail */
 const jail = new Map()
 
-const freeAnnouncement = (user, interaction) => {
+function freeAnnouncement (user, interaction) {
   const freeMessage = new MessageEmbed()
     .setDescription(`El usuario **${user.user.username}** ha sido liberado.`)
     .setColor("RANDOM")
