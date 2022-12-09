@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { CommandInteraction, MessageEmbed, User } = require("discord.js");
 const schedule = require('node-schedule');
 const timestring = require("timestring");
+const { setUserJailTime } = require("../utils/JailTimer");
 
 /** @type {Map<string, schedule.Job>} jail */
 const jail = new Map()
@@ -62,13 +63,15 @@ module.exports = {
 
     // Check if jailed & unjail
     if(prisionerRol.members.has(user.id)) {
-      if(jail.has(user.id)) {
-        const job = jail.get(user.id)
-        job.invoke()
-      } else {
-        user.roles.remove(prisionerRol);
-        freeAnnouncement(user, interaction)
+      const inJail = jail.has(user.id)
+
+      if(inJail) {
+        const JailJob = jail.get(user.id)
+        clearInterval(JailJob)
       }
+
+      user.roles.remove(prisionerRol);
+      freeAnnouncement(user, interaction)
 
       return interaction.reply({
         content: `**${author.user.username}-sama** acabas de sacar a **${user.user.username}-sama** de su prision`,
@@ -97,17 +100,15 @@ module.exports = {
 
       const timestamp = Math.floor(Date.now() / 1000)
       const timestampPrision = Math.floor(timePrision / 1000)
-      const dateJail = new Date(Date.now() + timePrision)
       
-      const job = schedule.scheduleJob(dateJail, function () {
+      const jailJob = setUserJailTime(timePrision, function () {
         user.roles.remove(prisionerRol)
         jail.delete(user.id)
         freeAnnouncement(user, interaction)
-        job.cancel(false)
       })
 
       user.roles.add(prisionerRol)
-      jail.set(user.id, job)
+      jail.set(user.id, jailJob)
 
       const jailMessage = new MessageEmbed()
         .setDescription(`El usuario **${user.user.username}** ha sido enviado al gulag. \rSaldra <t:${timestamp + timestampPrision}:R>`)
