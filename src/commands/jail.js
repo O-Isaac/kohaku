@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { CommandInteraction, MessageEmbed, User } = require("discord.js");
-const schedule = require('node-schedule');
 const timestring = require("timestring");
 const { setUserJailTime } = require("../utils/JailTimer");
 
