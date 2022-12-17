@@ -23,14 +23,5 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         port: ${{ secrets.PRIVATE_PORT }}
         envs: WEBHOOK
-        script: |
-          cd kohaku
-          git pull
-          pm2 restart 3 > /dev/null 2>&1 &
-          curl $WEBHOOK \
-          -H 'accept: application/json' \
-          -H 'content-type: application/json' \
-          -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.42' \
-          --data-raw '{"content":"<:KohaDaleLike:852059604002013196> **Kohaku** ha sido actualizada.","embeds":null,"attachments":[]}' \
-          --compressed > /dev/null 2>&1 &
+        script: sh update_kohaku.sh
         
