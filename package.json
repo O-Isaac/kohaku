@@ -33,7 +33,7 @@
     "start": "node -r dotenv/config index.js",
     "lint": "eslint --ext .js,.ts src",
     "deploy:commands": "node -r dotenv/config src/deploy-commands.js",
-    "prod:start": "NODE_ENV=production pm2 start \"npm start\" --name \"Kohaku\" ",
+    "start:prod": "NODE_ENV=production pm2 start \"npm start\" --name \"Kohaku\" ",
     "test": "npm run lint && npm run test:unit",
     "dev": "nodemon -r dotenv/config index.js"
   },
