@@ -30,7 +30,7 @@
     "pretty-error": "4.0.0"
   },
   "scripts": {
-    "start": "node -r dotenv/config index.js",
+    "start": "node index.js",
     "lint": "eslint --ext .js,.ts src",
     "deploy:commands": "node -r dotenv/config src/deploy-commands.js",
     "start:prod": "NODE_ENV=production pm2 start \"npm start\" --name \"Kohaku\" ",
